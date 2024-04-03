@@ -17,6 +17,23 @@ public:
         if (top > 0) return data[--top];
         else throw std::string("Empty");
     }
+
+    int getTop() {
+        return top;
+    }
+    int getPriority() {
+        T f = data[top - 1];
+        int pr = -1;
+        switch (f) {
+        case '(': pr = 0; break;
+        case ')': pr = 1; break;
+        case '+': pr = 2; break;
+        case '-': pr = 2; break;
+        case '*': pr = 3; break;
+        case '/': pr = 3; break;
+        }
+        return pr;
+    }
 };
 
 #endif  // INCLUDE_TSTACK_H_
