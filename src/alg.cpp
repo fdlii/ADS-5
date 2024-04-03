@@ -10,7 +10,10 @@ std::string infx2pstfx(std::string inf) {
     for (int i = 0; i < len; i++) {
         std::string var;
         int pr = 0;
-        if (inf[i] > '0' && inf[i] < '9') s += inf[i];
+        if (inf[i] > '0' && inf[i] < '9') {
+            s += inf[i];
+            s += ' ';
+        }
         else {
             switch (inf[i]) {
             case '(': pr = 0; break;
@@ -25,7 +28,10 @@ std::string infx2pstfx(std::string inf) {
                 st.push(inf[i]);
             }
             else if(pr == 1){
-                while ((var = st.pop()) != "(") s += var;
+                while ((var = st.pop()) != "(") {
+                    s += var;
+                    s += ' ';
+                }
             }
             else if (pr > st.getPriority()) {
                 st.push(inf[i]);
@@ -33,6 +39,7 @@ std::string infx2pstfx(std::string inf) {
             else {
                 while (pr <= st.getPriority()) {
                     s += st.pop();
+                    s += ' ';
                 }
                 st.push(inf[i]);
             }
@@ -42,14 +49,13 @@ std::string infx2pstfx(std::string inf) {
         s += st.pop();
     }
     return s;
-
 }
 
 int eval(std::string pref) {
     TStack<char, 100> st;
     int len = pref.length();
     int var1, var2, res;
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len; i += 2) {
         if (pref[i] > '0' && pref[i] < '9') {
             st.push(pref[i]);
         }
@@ -61,8 +67,11 @@ int eval(std::string pref) {
             case '-': res = var2 - var1; break;
             case '*': res = var2 * var1; break;
             case '/': res = var2 / var1; break;
+            case ' ': res = -1; break;
             }
-            st.push((char)(res + 48));
+            if (res != -1) {
+                st.push((char)(res + 48));
+            }
         }
     }
     return st.pop() - '0';
