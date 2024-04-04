@@ -49,6 +49,7 @@ std::string infx2pstfx(std::string inf) {
         s += st.pop();
         s += ' ';
     }
+    s.erase(s.length() - 1, 1);
     return s;
 }
 
