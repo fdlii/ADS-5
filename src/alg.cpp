@@ -13,8 +13,7 @@ std::string infx2pstfx(std::string inf) {
         if (inf[i] >= '0' && inf[i] <= '9') {
             s += inf[i];
             s += ' ';
-        }
-        else {
+        } else {
             switch (inf[i]) {
             case '(': pr = 0; break;
             case ')': pr = 1; break;
@@ -26,17 +25,14 @@ std::string infx2pstfx(std::string inf) {
 
             if (pr == 0 || st.getTop() == 0) {
                 st.push(inf[i]);
-            }
-            else if(pr == 1){
+            } else if (pr == 1) {
                 while ((var = st.pop()) != "(") {
                     s += var;
                     s += ' ';
                 }
-            }
-            else if (pr > st.getPriority()) {
+            } else if (pr > st.getPriority()) {
                 st.push(inf[i]);
-            }
-            else {
+            } else {
                 while (pr <= st.getPriority()) {
                     s += st.pop();
                     s += ' ';
@@ -71,8 +67,7 @@ int eval(std::string pref) {
             case '8': st.push(8); break;
             case '9': st.push(9); break;
             }
-        }
-        else {
+        } else {
             var1 = st.pop();
             var2 = st.pop();
             switch (pref[i]) {
